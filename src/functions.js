@@ -1,7 +1,7 @@
 'use strict'
+let fechaHoy = new Date()
 
-function age(birthdate) {
-    let fechaHoy = new Date()
+function age(birthdate) {    
     var edad = fechaHoy.getFullYear() - birthdate.getFullYear();
     var meses = fechaHoy.getMonth() - birthdate.getMonth();
 
@@ -24,11 +24,25 @@ function birthdateOnYear(birthdate,year) {
 
 function nextBirthdate(birthdate) {
     let nextBirthdate = new Date(birthdate)
-    return nextBirthdate.setFullYear(nextBirthdate.getFullYear()+1)
+    nextBirthdate.setFullYear(fechaHoy.getFullYear())
+    
+    if (nextBirthdate.getTime() < fechaHoy.getTime()){
+        nextBirthdate.setFullYear(fechaHoy.getFullYear()+1)
+    }
+
+    return nextBirthdate
 }
 
 function yearsWithBirthdateOnDay(birthdate,maxYear,dayOfWeek) {
-    
+    let yearsWithBirthdateOnDay = []
+    let nextBirthdate = new Date(birthdate)
+    for (let year = birthdate.getFullYear(); year <= maxYear; year++) {
+        if(nextBirthdate.getDay() == dayOfWeek) {
+            yearsWithBirthdateOnDay.push(nextBirthdate.getFullYear())
+        }
+        nextBirthdate.setFullYear(nextBirthdate.getFullYear()+1)
+    }
+    return yearsWithBirthdateOnDay
 }
 
 module.exports = {
